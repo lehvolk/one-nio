@@ -56,6 +56,7 @@ tasks.register<Exec>("compileNative") {
         nativeBuildDir.asFile.mkdirs()
     }
     val args = arrayListOf(
+        "gcc",
         "-D_GNU_SOURCE", "-fPIC", "-shared", "-Wl,-soname,libonenio.so",  "-O3", "-fno-omit-frame-pointer", "-momit-leaf-frame-pointer", "--verbose",
         "-o", "$nativeBuildDir/libonenio.so",
         "-I", "$javaHome/include", "-I", "$$javaHome/include/linux",
