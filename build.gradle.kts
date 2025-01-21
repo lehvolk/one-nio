@@ -55,13 +55,17 @@ tasks.register<Exec>("compileNative") {
         logger.info("Using java from $javaHome")
         nativeBuildDir.asFile.mkdirs()
     }
+    val sourceFiles = fileTree("src") {
+        include("**/*.c")
+    }.map { it.path }.toList()
+    
     val args = arrayListOf(
         "gcc",
         "-D_GNU_SOURCE", "-fPIC", "-shared", "-Wl,-soname,libonenio.so",  "-O3", "-fno-omit-frame-pointer", "-momit-leaf-frame-pointer", "--verbose",
         "-o", "$nativeBuildDir/libonenio.so",
-        "-I", "$javaHome/include", "-I", "$$javaHome/include/linux",
-        "-I", "$$javaHome/../include", "-I", "$$javaHome/../include/linux")
-    args += layout.files("src/*.c").files.joinToString(separator = " ") { it.absolutePath }
+        "-I", "$javaHome/include", "-I", "$javaHome/include/linux",
+        "-I", "$javaHome/../include", "-I", "$javaHome/../include/linux")
+    args += sourceFiles
     args += listOf("-ldl", "-lrt")
     commandLine(args)
 }
