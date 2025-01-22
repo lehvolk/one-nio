@@ -37,8 +37,15 @@ tasks.withType<JavaCompile> {
     options.compilerArgs = options.compilerArgs + "-Xlint:all"
 }
 
-tasks.test {
+tasks.withType<Test> {
     useJUnit()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+}
+
+tasks.register<Test>("testCI") {
+    jvmArgs("-Dci=true")
 }
 
 val nativeBuildDir = layout.buildDirectory.dir("classes/java/main").get()
