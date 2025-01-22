@@ -40,6 +40,7 @@ tasks.withType<JavaCompile> {
 tasks.withType<Test> {
     useJUnit()
     testLogging {
+        testLogging.showStandardStreams = true
         events("passed", "skipped", "failed")
     }
 }
