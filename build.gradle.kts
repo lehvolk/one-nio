@@ -73,6 +73,7 @@ tasks.register<Exec>("compileNative") {
 tasks.compileJava {
     if (DefaultNativePlatform.getCurrentOperatingSystem().isLinux) {
         dependsOn("compileNative")
+        finalizedBy("moveNativeLibrary")
     }
 }
 
