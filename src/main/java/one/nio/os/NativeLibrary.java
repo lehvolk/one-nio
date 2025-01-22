@@ -63,6 +63,7 @@ public final class NativeLibrary implements NativeLibraryMXBean {
             Management.registerMXBean(new NativeLibrary(libraryPath), "one.nio.os:type=NativeLibrary");
             return true;
         } catch (Throwable e) {
+            e.printStackTrace();
             log.error("Cannot load native IO library", e);
             return false;
         }
