@@ -79,7 +79,8 @@ tasks.compileJava {
 
 license {
     include("**/*.java")
-    header(rootProject.file("docs/copyright/COPYRIGHT_HEADER.txt"))
+    exclude("**/lz4/*.java")
+    header(rootProject.file("COPYRIGHT_HEADER.txt"))
 }
 
 val repoUrl: String = project.properties["repoUrl"] as? String ?: "https://maven.pkg.github.com/odnoklassniki/one-nio"
