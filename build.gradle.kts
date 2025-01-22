@@ -52,19 +52,7 @@ tasks.withType<Test> {
 }
 
 tasks.register<Test>("testCI") {
-    doFirst {
-        nativeBuildDir.asFileTree.forEach {
-            logger.info("FOUND before test ci: ${it.absolutePath}")
-        }
-    }
-
     jvmArgs("-Dci=true")
-    doLast {
-        nativeBuildDir.asFileTree.forEach {
-            logger.info("FOUND after test ci: ${it.absolutePath}")
-        }
-    }
-
 }
 
 val nativeBuildDir = layout.buildDirectory.dir("classes/java/main").get()
@@ -89,16 +77,11 @@ tasks.register<Exec>("compileNative") {
     args += sourceFiles
     args += listOf("-ldl", "-lrt")
     commandLine(args)
-    doLast {
-        nativeBuildDir.asFileTree.forEach { 
-            logger.info("FOUND after compile native: ${it.absolutePath}")            
-        }
-    }
 }
 
 tasks.compileJava {
     if (DefaultNativePlatform.getCurrentOperatingSystem().isLinux) {
-        dependsOn("compileNative")
+        finalizedBy("compileNative")
     }
 }
 
