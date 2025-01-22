@@ -94,7 +94,6 @@ public class JsonReaderTest {
     @Test
     public void customClass() throws IOException, ClassNotFoundException {
         String s = Json.toJson(new Custom());
-        System.out.println(s);
         JsonReader reader = new JsonReader(s.getBytes());
         Custom x = reader.readObject(Custom.class);
     }

@@ -29,6 +29,7 @@ dependencies {
     implementation(group = "org.slf4j", name = "slf4j-api", version = "1.7.36")
 
     testImplementation(group = "junit", name = "junit", version = "4.13.1")
+    testImplementation(group = "org.apache.logging.log4j", name = "log4j-slf4j-impl", version = "2.24.3")
 }
 
 tasks.withType<JavaCompile> {
