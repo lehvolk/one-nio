@@ -43,7 +43,6 @@ public final class NativeLibrary implements NativeLibraryMXBean {
         try {
             InputStream in = NativeLibrary.class.getResourceAsStream("/libonenio.so");
             if (in == null) {
-                System.out.println("Cannot find native IO library");
                 log.error("Cannot find native IO library");
                 return false;
             }
@@ -64,7 +63,6 @@ public final class NativeLibrary implements NativeLibraryMXBean {
             Management.registerMXBean(new NativeLibrary(libraryPath), "one.nio.os:type=NativeLibrary");
             return true;
         } catch (Throwable e) {
-            System.out.println("Cannot load native IO library");
             log.error("Cannot load native IO library", e);
             return false;
         }
