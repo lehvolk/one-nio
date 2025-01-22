@@ -77,6 +77,11 @@ tasks.register<Exec>("compileNative") {
     args += sourceFiles
     args += listOf("-ldl", "-lrt")
     commandLine(args)
+    doLast {
+        nativeBuildDir.asFileTree.forEach { 
+            logger.info("FOUND: ${it.absolutePath}")            
+        }
+    }
 }
 
 tasks.compileJava {
