@@ -1,3 +1,4 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 
 val semVer: String? by project
@@ -40,6 +41,10 @@ tasks.withType<JavaCompile> {
 tasks.withType<Test> {
     useJUnit()
     testLogging {
+         debug {
+             events("started", "skipped", "failed")
+             exceptionFormat = TestExceptionFormat.FULL
+         }
         testLogging.showStandardStreams = true
         events("passed", "skipped", "failed")
     }
