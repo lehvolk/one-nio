@@ -41,12 +41,7 @@ tasks.test {
     useJUnit()
 }
 
-val nativeBuildDir = layout.buildDirectory.dir("native").get()
-
-tasks.register<Copy>("moveNativeLibrary") {
-    file("$nativeBuildDir/libonenio.so")
-    to(layout.buildDirectory.dir("classes/java/main"))
-}
+val nativeBuildDir = layout.buildDirectory.dir("classes/java/main").get()
 
 tasks.register<Exec>("compileNative") {
     val javaHome = System.getProperty("java.home")
@@ -58,7 +53,7 @@ tasks.register<Exec>("compileNative") {
     val sourceFiles = fileTree("src") {
         include("**/*.c")
     }.map { it.path }.toList()
-    
+
     val args = arrayListOf(
         "gcc",
         "-D_GNU_SOURCE", "-fPIC", "-shared", "-Wl,-soname,libonenio.so",  "-O3", "-fno-omit-frame-pointer", "-momit-leaf-frame-pointer", "--verbose",
@@ -73,7 +68,6 @@ tasks.register<Exec>("compileNative") {
 tasks.compileJava {
     if (DefaultNativePlatform.getCurrentOperatingSystem().isLinux) {
         dependsOn("compileNative")
-        finalizedBy("moveNativeLibrary")
     }
 }
 
